@@ -1,0 +1,241 @@
+$color-primary: #9966cc;
+$color-secondary: #c8a2c8;
+$pole-color: brown;
+$hangman-color: black;
+$title-color: lightgray;
+$button-color: mintcream;
+$start-button-color: antiquewhite;
+$word-color: aquamarine;
+$win-color: #99ff99;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  color: white;
+}
+
+.root {
+  background: linear-gradient(to right, $color-secondary, $color-primary);
+  height: 100vh;
+}
+
+.game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  flex: 0.2;
+  font-size: 3rem;
+  font-weight: bold;
+  color: $title-color;
+}
+
+.play-area {
+  flex: 0.7;
+}
+
+.start {
+  flex: 0.1;
+}
+
+.game-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.lives-container {
+  flex: 0.4;
+}
+
+.word-container {
+  flex: 0.6;
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+button {
+  cursor: pointer;
+  background-color: $color-primary;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 20%;
+  color: $button-color;
+  font-size: 1.5rem;
+  transition-duration: 500ms;
+
+  &:hover {
+    transform: scaleX(1.1) scaleY(1.1);
+  }
+}
+
+.start-button {
+  color: $start-button-color;
+}
+
+.played {
+  background-color: darken($color-primary, 10%);
+  cursor: default;
+  pointer-events: none;
+}
+
+.word {
+  flex: 0.4;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  font-size: 3rem;
+}
+
+.words {
+  color: $word-color;
+}
+
+.letters {
+  margin: 3rem;
+  flex: 0.6;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.letter-button {
+  height: 4rem;
+  width: 4rem;
+  font-weight: bold;
+}
+
+.lives {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 2rem;
+}
+
+.hangman-container {
+  position: relative;
+  padding-left: 10rem;
+  padding-top: 8rem;
+}
+
+.pole {
+  position: absolute;
+  height: 70vh;
+  top: 2rem;
+  left: 3rem;
+  border-left: 10px solid $pole-color;
+  border-top: 13px solid $pole-color;
+  width: 10.5rem;
+
+  &::after {
+    content: "";
+    height: 5.5rem;
+    width: 10px;
+    background: $pole-color;
+    position: absolute;
+    right: 0;
+  }
+}
+
+.hangman {
+  position: relative;
+
+  &__element {
+    opacity: 0.25;
+
+    &:nth-child(1) {
+      height: 100px;
+      width: 100px;
+      border-radius: 50%;
+      border: 10px solid $hangman-color;
+    }
+
+    &:not(:first-child) {
+      height: 100px;
+      width: 10px;
+      background: $hangman-color;
+    }
+
+    &:nth-child(2) {
+      height: 170px;
+      position: absolute;
+      left: 50px;
+    }
+
+    &:nth-child(3) {
+      position: absolute;
+      transform: rotate(45deg);
+      top: 125px;
+      left: 15px;
+    }
+
+    &:nth-child(4) {
+      position: absolute;
+      transform: rotate(-45deg);
+      top: 125px;
+      left: 85px;
+    }
+
+    &:nth-child(5) {
+      position: absolute;
+      transform: rotate(45deg);
+      top: 250px;
+      left: 15px;
+    }
+
+    &:nth-child(6) {
+      position: absolute;
+      transform: rotate(-45deg);
+      top: 250px;
+      left: 85px;
+    }
+  }
+}
+
+@for $i from 1 through 6 {
+  .hangman-#{$i} {
+    @for $j from 1 through $i {
+      @if $i == 6 and $j == 1 {
+        .hangman__element:nth-child(#{$j}) {
+          &::after {
+            content: "● ●";
+            position: absolute;
+            font-size: 2rem;
+            color: $hangman-color;
+            left: 25px;
+          }
+
+          &::before {
+            content: "(";
+            font-size: 2rem;
+            color: $hangman-color;
+            position: absolute;
+            font-family: sans-serif;
+            transform: rotate(90deg);
+            font-weight: bold;
+            top: 50px;
+            left: 45px;
+          }
+        }
+      }
+
+      .hangman__element:nth-child(#{$j}) {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.game-end {
+  color: $win-color;
+  font-size: 4rem;
+  position: absolute;
+  top: 50%;
+}
