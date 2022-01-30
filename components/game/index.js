@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Lives from "./lives";
-import Word from "./word";
-import Letters from "./letters";
-import Start from "./start";
-import Title from "./title";
+import Layout from "./layout";
 
 const ALL_ALPHABETS = [..."ABCDEFGHIJKLMNOPQRSTUVWXYZ"];
 const MAX_LIVES = 6;
@@ -54,22 +50,14 @@ export default function Game() {
   }, [isWon, livesLeft]);
 
   return (
-    <div className="game">
-      <Title />
-      <div className="play-area">
-        <div className="game-container">
-          <div className="lives-container">
-            <Lives livesLeft={livesLeft} />
-          </div>
-          <div className="word-container">
-            <Word actualWord={actualWord} playedLetters={played_set} />
-            <Letters playedLetters={played_set} onSelect={guessLetter} />
-          </div>
-        </div>
-      </div>
-      <Start onStart={start} />
-      {isWon && <div className="game-end">You won!</div>}
-      {livesLeft === 0 && <div className="game-end">You lost!</div>}
-    </div>
+    <Layout
+      livesLeft={livesLeft}
+      actualWord={actualWord}
+      played_set={played_set}
+      guessLetter={guessLetter}
+      start={start}
+      isWon={isWon}
+      isRunning={isRunning}
+    />
   );
 }

@@ -1,0 +1,15 @@
+.played {
+  background-color: darken($purple-color, 10%);
+  cursor: default;
+  pointer-events: none;
+}
+
+.letters {
+  margin: 3rem;
+}
+
+.letter-button {
+  height: 4rem;
+  width: 4rem;
+  font-weight: bold;
+}

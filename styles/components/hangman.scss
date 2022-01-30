@@ -1,0 +1,113 @@
+.hangman-container {
+  position: relative;
+  padding-left: 10rem;
+  padding-top: 8rem;
+}
+
+.pole {
+  position: absolute;
+  height: 70vh;
+  top: 2rem;
+  left: 3rem;
+  border-left: 10px solid $pole-color;
+  border-top: 13px solid $pole-color;
+  width: 10.5rem;
+
+  &::after {
+    content: "";
+    height: 5.5rem;
+    width: 10px;
+    background: $pole-color;
+    position: absolute;
+    right: 0;
+  }
+}
+
+.hangman {
+  position: relative;
+
+  &__element {
+    opacity: 0.25;
+
+    &:nth-child(1) {
+      height: 100px;
+      width: 100px;
+      border-radius: 50%;
+      border: 10px solid $hangman-color;
+    }
+
+    &:not(:first-child) {
+      height: 100px;
+      width: 10px;
+      background: $hangman-color;
+    }
+
+    &:nth-child(2) {
+      height: 170px;
+      position: absolute;
+      left: 50px;
+    }
+
+    &:nth-child(3) {
+      position: absolute;
+      transform: rotate(45deg);
+      top: 125px;
+      left: 15px;
+    }
+
+    &:nth-child(4) {
+      position: absolute;
+      transform: rotate(-45deg);
+      top: 125px;
+      left: 85px;
+    }
+
+    &:nth-child(5) {
+      position: absolute;
+      transform: rotate(45deg);
+      top: 270px;
+      left: 15px;
+    }
+
+    &:nth-child(6) {
+      position: absolute;
+      transform: rotate(-45deg);
+      top: 270px;
+      left: 85px;
+    }
+  }
+}
+
+@for $i from 1 through 6 {
+  .hangman-#{$i} {
+    @for $j from 1 through $i {
+      @if $i == 6 and $j == 1 {
+        .hangman__element:nth-child(#{$j}) {
+          &::after {
+            content: "● ●";
+            position: absolute;
+            font-size: 2rem;
+            color: $hangman-color;
+            left: 25px;
+          }
+
+          &::before {
+            content: "(";
+            font-size: 2rem;
+            color: $hangman-color;
+            position: absolute;
+            font-family: sans-serif;
+            transform: rotate(90deg);
+            font-weight: bold;
+            top: 50px;
+            left: 45px;
+          }
+        }
+      }
+
+      .hangman__element:nth-child(#{$j}) {
+        opacity: 1;
+      }
+    }
+  }
+}

@@ -1,0 +1,54 @@
+.game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  flex: 0.2;
+}
+
+.play-area {
+  flex: 0.7;
+  display: flex;
+  flex-direction: row;
+}
+
+.start-button {
+  flex: 0.1;
+}
+
+.left-container {
+  flex: 0.4;
+}
+
+.right-container {
+  flex: 0.6;
+  display: flex;
+  flex-direction: column;
+  margin-top: 4rem;
+}
+
+.word {
+  flex: 0.4;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.letters {
+  flex: 0.6;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.lives {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
