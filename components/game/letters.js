@@ -1,6 +1,6 @@
 import React from "react";
 
-const ALL_ALPHABETS = [..."ABCDEFGHIJKLMNOPQRSTUVWXYZ"];
+const ALL_ALPHABETS = [..."abcdefghijklmnopqrstuvwxyz"];
 
 export default function Letters({ playedLetters, onSelect }) {
   return (

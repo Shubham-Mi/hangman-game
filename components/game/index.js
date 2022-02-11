@@ -1,59 +1,49 @@
 import React, { useEffect, useState } from "react";
 import Layout from "./layout";
+import { createSession, playInSession } from "../../api/session";
 
-const ALL_ALPHABETS = [..."ABCDEFGHIJKLMNOPQRSTUVWXYZ"];
+const ALL_ALPHABETS = [..."abcdefghijklmnopqrstuvwxyz"];
 const MAX_LIVES = 6;
 
 export default function Game() {
-  const [actualWord, setActualWord] = useState("");
-  const [playedLetters, setPlayedLetters] = useState([]);
-  const [isRunning, setIsRunning] = useState(false);
+  const [session, setSession] = useState(null);
+  const isRunning = !!session;
+  const isWon = session
+    ? session.result && session.livesLeft
+      ? true
+      : false
+    : false;
 
-  const word_set = new Set([...actualWord]);
-  const played_set = new Set(playedLetters);
-
-  const wrongLetters = playedLetters.filter((letter) => {
-    return !word_set.has(letter);
-  });
-  const livesLeft = MAX_LIVES - wrongLetters.length;
-
-  const isWon =
-    isRunning &&
-    [...word_set].reduce((acc, curr) => {
-      if (!played_set.has(curr)) return false;
-      return acc;
-    }, true);
-
-  const guessLetter = (letter) => {
-    setPlayedLetters((prev) => [...prev, letter]);
-    document.getElementById(`${letter}-button`).className =
-      "letter-button played";
-  };
-
-  const start = () => {
-    setActualWord("JUKEBOX");
-    setPlayedLetters([]);
-    setIsRunning(true);
+  const start = async (name) => {
+    const session = await createSession(name);
+    setSession(session);
 
     ALL_ALPHABETS.forEach((alphabet) => {
       document.getElementById(`${alphabet}-button`).className = "letter-button";
     });
   };
 
+  const guessLetter = async (letter) => {
+    const updatedSession = await playInSession(session.id, letter);
+    setSession(updatedSession);
+    document.getElementById(`${letter}-button`).className =
+      "letter-button played";
+  };
+
   useEffect(() => {
-    if (isWon || livesLeft === 0) {
+    if (session && (isWon || session.livesLeft === 0)) {
       ALL_ALPHABETS.forEach((alphabet) => {
         document.getElementById(`${alphabet}-button`).className =
           "letter-button played";
       });
     }
-  }, [isWon, livesLeft]);
+  }, [isWon, session]);
 
   return (
     <Layout
-      livesLeft={livesLeft}
-      actualWord={actualWord}
-      played_set={played_set}
+      livesLeft={session ? session.livesLeft : MAX_LIVES}
+      maskedWord={session ? session.maskedWord : new Array(0)}
+      played_set={session ? new Set(session.playedLetters) : new Set()}
       guessLetter={guessLetter}
       start={start}
       isWon={isWon}

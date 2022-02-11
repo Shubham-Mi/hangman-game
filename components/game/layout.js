@@ -7,7 +7,7 @@ import Title from "./title";
 
 export default function Layout({
   livesLeft,
-  actualWord,
+  maskedWord,
   played_set,
   guessLetter,
   start,
@@ -22,7 +22,7 @@ export default function Layout({
           <Lives livesLeft={livesLeft} />
         </div>
         <div className="right-container">
-          <Word actualWord={actualWord} playedLetters={played_set} />
+          <Word maskedWord={maskedWord} />
           <Letters playedLetters={played_set} onSelect={guessLetter} />
         </div>
       </div>

@@ -1,16 +1,12 @@
 import React from "react";
 
-export default function Word({ actualWord, playedLetters }) {
+export default function Word({ maskedWord }) {
   return (
     <div className="word">
-      {actualWord.split("").map((letter, key) => {
-        return playedLetters.has(letter) ? (
+      {maskedWord.map((letter, key) => {
+        return (
           <span className="words" key={key}>
-            {letter}
-          </span>
-        ) : (
-          <span className="words" key={key}>
-            &nbsp; _ &nbsp;
+            &nbsp; {letter} &nbsp;
           </span>
         );
       })}
